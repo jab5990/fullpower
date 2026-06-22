@@ -1,20 +1,11 @@
+"use client"
+
 import { Zap, Phone, Mail, MapPin } from "lucide-react"
-
-const serviceLinks = [
-  "Residential Electrical",
-  "Commercial & Buildings",
-  "Fire Alarm Systems",
-  "Burglar Alarm Systems",
-]
-
-const companyLinks = [
-  { label: "About Us", href: "#about" },
-  { label: "Why Choose Us", href: "#why-us" },
-  { label: "Services", href: "#services" },
-  { label: "Get a Quote", href: "#contact" },
-]
+import { useLanguage } from "@/lib/i18n"
 
 export function SiteFooter() {
+  const { t } = useLanguage()
+
   return (
     <footer className="border-t border-border bg-secondary/40">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -27,15 +18,14 @@ export function SiteFooter() {
               <span className="text-base font-bold tracking-tight">Full Power Services</span>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Licensed electrical contractor and security alarm specialist serving residential and
-              commercial clients in Cape Coral and the surrounding areas.
+              {t.footer.description}
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide">Services</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide">{t.footer.servicesTitle}</h3>
             <ul className="mt-4 space-y-2">
-              {serviceLinks.map((link) => (
+              {t.footer.serviceLinks.map((link) => (
                 <li key={link}>
                   <a href="#services" className="text-sm text-muted-foreground hover:text-primary">
                     {link}
@@ -46,9 +36,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide">Company</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide">{t.footer.companyTitle}</h3>
             <ul className="mt-4 space-y-2">
-              {companyLinks.map((link) => (
+              {t.footer.companyLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="text-sm text-muted-foreground hover:text-primary">
                     {link.label}
@@ -59,7 +49,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide">Contact</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide">{t.footer.contactTitle}</h3>
             <ul className="mt-4 space-y-3">
               <li>
                 <a
@@ -89,9 +79,9 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Full Power Services. All rights reserved.
+            &copy; {new Date().getFullYear()} Full Power Services. {t.footer.rights}
           </p>
-          <p className="text-sm text-muted-foreground">Licensed · Bonded · Insured</p>
+          <p className="text-sm text-muted-foreground">{t.footer.credentials}</p>
         </div>
       </div>
     </footer>

@@ -3,16 +3,19 @@
 import { useState } from "react"
 import { Zap, Menu, X, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-]
+import { useLanguage } from "@/lib/i18n"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { label: t.header.nav.services, href: "#services" },
+    { label: t.header.nav.whyUs, href: "#why-us" },
+    { label: t.header.nav.about, href: "#about" },
+    { label: t.header.nav.contact, href: "#contact" },
+  ]
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
@@ -24,7 +27,7 @@ export function SiteHeader() {
           <span className="flex flex-col leading-none">
             <span className="text-base font-bold tracking-tight">Full Power Services</span>
             <span className="text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
-              Electrical &amp; Security
+              {t.header.tagline}
             </span>
           </span>
         </a>
@@ -42,6 +45,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
           <a
             href="tel:+13053992271"
             className="flex items-center gap-2 text-sm font-semibold text-foreground"
@@ -50,19 +54,22 @@ export function SiteHeader() {
             305-399-2271
           </a>
           <Button nativeButton={false} render={<a href="#contact" />}>
-            Get a Quote
+            {t.header.getQuote}
           </Button>
         </div>
 
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-foreground md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-md p-2 text-foreground"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? t.header.closeMenu : t.header.openMenu}
+            aria-expanded={open}
+          >
+            {open ? <X className="size-6" /> : <Menu className="size-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -83,7 +90,7 @@ export function SiteHeader() {
               render={<a href="#contact" onClick={() => setOpen(false)} />}
               className="mt-2"
             >
-              Get a Quote
+              {t.header.getQuote}
             </Button>
           </nav>
         </div>
