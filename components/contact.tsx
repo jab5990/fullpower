@@ -4,26 +4,25 @@ import { useActionState } from "react"
 import { Phone, Mail, MapPin, Clock, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { sendQuote, type QuoteState } from "@/app/actions/send-quote"
-
-const contactDetails = [
-  { icon: Phone, label: "Call us", value: "305-399-2271", href: "tel:+13053992271" },
-  { icon: Mail, label: "Email", value: "info@fullpower.services", href: "mailto:info@fullpower.services" },
-  { icon: MapPin, label: "Service area", value: "Cape Coral & surrounding areas" },
-  { icon: Clock, label: "Hours", value: "Mon–Sat 7am–7pm · 24/7 emergency" },
-]
+import { useLanguage } from "@/lib/i18n"
 
 const initialState: QuoteState = { ok: false }
 
-const serviceOptions = [
-  "Residential electrical",
-  "Commercial / building",
-  "Fire alarm system",
-  "Burglar alarm system",
-  "Other / not sure",
-]
-
 export function Contact() {
+  const { t } = useLanguage()
   const [state, formAction, pending] = useActionState(sendQuote, initialState)
+
+  const contactDetails = [
+    { icon: Phone, label: t.contact.details.callLabel, value: "305-399-2271", href: "tel:+13053992271" },
+    {
+      icon: Mail,
+      label: t.contact.details.emailLabel,
+      value: "info@fullpower.services",
+      href: "mailto:info@fullpower.services",
+    },
+    { icon: MapPin, label: t.contact.details.areaLabel, value: t.contact.details.areaValue },
+    { icon: Clock, label: t.contact.details.hoursLabel, value: t.contact.details.hoursValue },
+  ]
 
   return (
     <section id="contact" className="bg-background">
@@ -33,14 +32,13 @@ export function Contact() {
             {/* Info side */}
             <div className="bg-primary p-8 text-primary-foreground sm:p-10 lg:p-12">
               <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/80">
-                Get In Touch
+                {t.contact.eyebrow}
               </p>
               <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-                Request your free quote today
+                {t.contact.title}
               </h2>
               <p className="mt-4 text-pretty leading-relaxed text-primary-foreground/90">
-                Tell us about your project and we&apos;ll get back to you within one business day with a
-                no-obligation estimate.
+                {t.contact.description}
               </p>
 
               <ul className="mt-10 space-y-6">
@@ -80,10 +78,9 @@ export function Contact() {
                   <span className="flex size-14 items-center justify-center rounded-full bg-accent text-primary">
                     <Check className="size-7" aria-hidden="true" />
                   </span>
-                  <h3 className="mt-5 text-2xl font-bold">Thank you!</h3>
+                  <h3 className="mt-5 text-2xl font-bold">{t.contact.successTitle}</h3>
                   <p className="mt-2 max-w-sm text-muted-foreground">
-                    Your request has been received. A member of the Full Power Services team will reach
-                    out within one business day.
+                    {t.contact.successMessage}
                   </p>
                 </div>
               ) : (
@@ -91,7 +88,7 @@ export function Contact() {
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="name" className="mb-1.5 block text-sm font-medium">
-                        Full name
+                        {t.contact.nameLabel}
                       </label>
                       <input
                         id="name"
@@ -99,12 +96,12 @@ export function Contact() {
                         type="text"
                         required
                         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
-                        placeholder="Jane Smith"
+                        placeholder={t.contact.namePlaceholder}
                       />
                     </div>
                     <div>
                       <label htmlFor="phone" className="mb-1.5 block text-sm font-medium">
-                        Phone
+                        {t.contact.phoneLabel}
                       </label>
                       <input
                         id="phone"
@@ -112,14 +109,14 @@ export function Contact() {
                         type="tel"
                         required
                         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
-                        placeholder="(555) 123-4567"
+                        placeholder={t.contact.phonePlaceholder}
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
-                      Email
+                      {t.contact.emailLabel}
                     </label>
                     <input
                       id="email"
@@ -127,13 +124,13 @@ export function Contact() {
                       type="email"
                       required
                       className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
-                      placeholder="you@example.com"
+                      placeholder={t.contact.emailPlaceholder}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="service" className="mb-1.5 block text-sm font-medium">
-                      Service needed
+                      {t.contact.serviceLabel}
                     </label>
                     <select
                       id="service"
@@ -142,9 +139,9 @@ export function Contact() {
                       defaultValue=""
                     >
                       <option value="" disabled>
-                        Select a service
+                        {t.contact.servicePlaceholder}
                       </option>
-                      {serviceOptions.map((opt) => (
+                      {t.contact.serviceOptions.map((opt) => (
                         <option key={opt} value={opt}>
                           {opt}
                         </option>
@@ -154,14 +151,14 @@ export function Contact() {
 
                   <div>
                     <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
-                      Project details
+                      {t.contact.messageLabel}
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       rows={4}
                       className="w-full resize-none rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-ring/40"
-                      placeholder="Tell us a bit about what you need..."
+                      placeholder={t.contact.messagePlaceholder}
                     />
                   </div>
 
@@ -172,10 +169,10 @@ export function Contact() {
                   ) : null}
 
                   <Button type="submit" size="lg" className="w-full" disabled={pending}>
-                    {pending ? "Sending..." : "Request Free Quote"}
+                    {pending ? t.contact.submitting : t.contact.submit}
                   </Button>
                   <p className="text-center text-xs text-muted-foreground">
-                    By submitting, you agree to be contacted about your request.
+                    {t.contact.disclaimer}
                   </p>
                 </form>
               )}
