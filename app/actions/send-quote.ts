@@ -2,7 +2,7 @@
 
 import { Resend } from "resend"
 
-const TO_EMAIL = "contact@fullpower.services"
+const TO_EMAIL = "info@fullpower.services"
 
 export type QuoteState = {
   ok: boolean
